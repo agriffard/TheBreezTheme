@@ -1,0 +1,7 @@
+{% comment %}
+  Flat menu item: no <ul>/<li> wrapper. Renders a single <a> per item
+  (LinkMenuItem), recursing into children inline. Matches TheBreezTheme nav.
+{% endcomment %}
+{%- assign link = Model.ContentItem.Content.LinkMenuItemPart -%}
+<a href="{{ link.Url | href }}"{% if Model.Selected %} aria-current="page"{% endif %}>{{ Model.ContentItem.DisplayText }}</a>
+{%- for item in Model.Items %}{{ item | shape_render }}{% endfor -%}

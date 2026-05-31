@@ -1,1 +1,2 @@
-{% for item in Model.Items %}{{ item | shape_render }}{% endfor %}
+{% comment %} Renders menu items as flat <a> tags, no <ul>/<li> wrapper. {% endcomment %}
+{%- for item in Model.Items %}{{ item | shape_render }}{% endfor -%}

@@ -1,0 +1,17 @@
+{% comment %}
+  Overrides the default ListPart shape (which renders a Bootstrap
+  <ul class="list-group">). Renders contained items as a responsive
+  card grid styled by TheBreezTheme. Used by the Blog list page.
+{% endcomment %}
+<div class="blog-list grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  {%- for item in Model.ContentItems %}
+  <article class="card p-6 rounded-card shadow-card">
+    <h2 class="card-title mb-2"><a href="{{ item | display_url }}">{{ item.DisplayText }}</a></h2>
+    {%- assign published = item.Content.PublishedUtc | default: item.CreatedUtc %}
+    {%- if published %}<p class="card-meta mb-4">{{ published | date: "%Y-%m-%d" }}</p>{% endif %}
+    <p>{{ item.Content.BlogPost.HtmlBodyPart.Html | strip_html | truncate: 180 }}</p>
+    <a class="btn btn-outline mt-4" href="{{ item | display_url }}">{{ "Read more" | t }} &rarr;</a>
+  </article>
+  {%- endfor %}
+</div>
+{{ Model.Pager | shape_render }}
