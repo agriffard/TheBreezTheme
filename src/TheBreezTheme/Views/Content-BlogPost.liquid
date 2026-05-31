@@ -1,16 +1,7 @@
 <article class="article card p-6 rounded-card shadow-card container">
-  {{ Model.Content.TitlePart | shape_render }}
-  <p class="meta mb-4">
-    {% if Model.ContentItem.PublishedUtc %}
-      {{ "Published" | t }} {{ Model.ContentItem.PublishedUtc | date: "%Y-%m-%d" }}
-    {% endif %}
-  </p>
-  {% if Model.ContentItem.Content.BlogPost.TagsPart.ContentItemIds.size > 0 %}
-    <div class="mb-4">
-      {% for tag in Model.ContentItem.Content.BlogPost.TagsPart.ContentItemIds %}
-        <span class="badge">{{ tag }}</span>
-      {% endfor %}
-    </div>
-  {% endif %}
-  {{ Model.Content.HtmlBodyPart | shape_render }}
+  <h1 class="mb-2">{{ Model.ContentItem.DisplayText }}</h1>
+  {%- if Model.ContentItem.CreatedUtc %}
+  <p class="meta mb-4">{{ "Published" | t }} {{ Model.ContentItem.CreatedUtc | date: "%Y-%m-%d" }}</p>
+  {%- endif %}
+  {{ Model.Content | shape_render }}
 </article>

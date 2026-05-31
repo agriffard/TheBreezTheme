@@ -174,7 +174,7 @@
           "Author": "admin",
           "TitlePart": { "Title": "Welcome" },
           "AutoroutePart": { "Path": "welcome", "SetHomepage": false },
-          "HtmlBodyPart": { "Html": "<h1>Welcome to TheBreez Sample</h1><p>This site was provisioned automatically with Orchard Core AutoSetup using TheBreezTheme.</p>" },
+          "HtmlBodyPart": { "Html": "<p class=\"lead\">Welcome to TheBreez Sample. This site was provisioned automatically with Orchard Core AutoSetup using TheBreezTheme.</p>" },
           "LocalizationPart": { "Culture": "en", "LocalizationSet": "home" }
         },
         {
@@ -188,7 +188,7 @@
           "Author": "admin",
           "TitlePart": { "Title": "Bienvenue" },
           "AutoroutePart": { "Path": "fr/bienvenue", "SetHomepage": false },
-          "HtmlBodyPart": { "Html": "<h1>Bienvenue sur TheBreez Sample</h1><p>Ce site a été provisionné automatiquement avec Orchard Core AutoSetup en utilisant TheBreezTheme.</p>" },
+          "HtmlBodyPart": { "Html": "<p class=\"lead\">Bienvenue sur TheBreez Sample. Ce site a été provisionné automatiquement avec Orchard Core AutoSetup en utilisant TheBreezTheme.</p>" },
           "LocalizationPart": { "Culture": "fr", "LocalizationSet": "home" }
         },
         {
