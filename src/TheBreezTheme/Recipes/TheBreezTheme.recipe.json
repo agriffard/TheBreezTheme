@@ -67,13 +67,13 @@
           "Name": "Page",
           "DisplayName": "Page",
           "Settings": {
-            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true, "Securable": true },
+            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true },
             "Stereotype": "Content"
           },
           "ContentTypePartDefinitionRecords": [
             { "PartName": "TitlePart", "Name": "TitlePart" },
             { "PartName": "HtmlBodyPart", "Name": "HtmlBodyPart" },
-            { "PartName": "AutoroutePart", "Name": "AutoroutePart" },
+            { "PartName": "AutoroutePart", "Name": "AutoroutePart", "Settings": { "AutoroutePartSettings": { "AllowCustomPath": true, "Pattern": "{{ ContentItem | display_text | slugify }}", "ShowHomepageOption": true } } },
             { "PartName": "LocalizationPart", "Name": "LocalizationPart" }
           ]
         },
@@ -81,14 +81,13 @@
           "Name": "BlogPost",
           "DisplayName": "Blog Post",
           "Settings": {
-            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true, "Securable": true },
+            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true },
             "Stereotype": "Content"
           },
           "ContentTypePartDefinitionRecords": [
             { "PartName": "TitlePart", "Name": "TitlePart" },
             { "PartName": "HtmlBodyPart", "Name": "HtmlBodyPart" },
-            { "PartName": "AutoroutePart", "Name": "AutoroutePart" },
-            { "PartName": "TagsPart", "Name": "TagsPart" },
+            { "PartName": "AutoroutePart", "Name": "AutoroutePart", "Settings": { "AutoroutePartSettings": { "AllowCustomPath": true, "Pattern": "blog/{{ ContentItem | display_text | slugify }}" } } },
             { "PartName": "LocalizationPart", "Name": "LocalizationPart" }
           ]
         },
@@ -96,13 +95,13 @@
           "Name": "Blog",
           "DisplayName": "Blog",
           "Settings": {
-            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Versionable": true, "Securable": true },
+            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Versionable": true },
             "Stereotype": "Content"
           },
           "ContentTypePartDefinitionRecords": [
             { "PartName": "TitlePart", "Name": "TitlePart" },
-            { "PartName": "ListPart", "Name": "ListPart" },
-            { "PartName": "AutoroutePart", "Name": "AutoroutePart" },
+            { "PartName": "ListPart", "Name": "ListPart", "Settings": { "ListPartSettings": { "ContainedContentTypes": [ "BlogPost" ], "EnableOrdering": false } } },
+            { "PartName": "AutoroutePart", "Name": "AutoroutePart", "Settings": { "AutoroutePartSettings": { "AllowCustomPath": true, "Pattern": "{{ ContentItem | display_text | slugify }}", "AllowRouteContainedItems": true } } },
             { "PartName": "LocalizationPart", "Name": "LocalizationPart" }
           ]
         },
@@ -110,7 +109,7 @@
           "Name": "Feature",
           "DisplayName": "Feature",
           "Settings": {
-            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true, "Securable": true },
+            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true },
             "Stereotype": "Content"
           },
           "ContentTypePartDefinitionRecords": [
@@ -147,187 +146,204 @@
       }
     },
     {
+      "name": "Roles",
+      "Roles": [
+        {
+          "Name": "Anonymous",
+          "Description": "Anonymous role",
+          "Permissions": [ "ViewContent" ]
+        },
+        {
+          "Name": "Authenticated",
+          "Description": "Authenticated role",
+          "Permissions": [ "ViewContent" ]
+        }
+      ]
+    },
+    {
       "name": "Content",
       "Data": [
         {
           "ContentItemId": "page-home-en",
+          "ContentItemVersionId": "page-home-en-v1",
           "ContentType": "Page",
           "DisplayText": "Welcome",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
-          "Content": {
-            "TitlePart": { "Title": "Welcome" },
-            "AutoroutePart": { "Path": "" },
-            "HtmlBodyPart": { "Html": "" },
-            "LocalizationPart": { "Culture": "en", "LocalizationSet": "home" }
-          }
+          "Author": "admin",
+          "TitlePart": { "Title": "Welcome" },
+          "AutoroutePart": { "Path": "welcome", "SetHomepage": false },
+          "HtmlBodyPart": { "Html": "<h1>Welcome to TheBreez Sample</h1><p>This site was provisioned automatically with Orchard Core AutoSetup using TheBreezTheme.</p>" },
+          "LocalizationPart": { "Culture": "en", "LocalizationSet": "home" }
         },
         {
           "ContentItemId": "page-home-fr",
+          "ContentItemVersionId": "page-home-fr-v1",
           "ContentType": "Page",
           "DisplayText": "Bienvenue",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
-          "Content": {
-            "TitlePart": { "Title": "Bienvenue" },
-            "AutoroutePart": { "Path": "fr" },
-            "HtmlBodyPart": { "Html": "" },
-            "LocalizationPart": { "Culture": "fr", "LocalizationSet": "home" }
-          }
+          "Author": "admin",
+          "TitlePart": { "Title": "Bienvenue" },
+          "AutoroutePart": { "Path": "fr/bienvenue", "SetHomepage": false },
+          "HtmlBodyPart": { "Html": "<h1>Bienvenue sur TheBreez Sample</h1><p>Ce site a été provisionné automatiquement avec Orchard Core AutoSetup en utilisant TheBreezTheme.</p>" },
+          "LocalizationPart": { "Culture": "fr", "LocalizationSet": "home" }
         },
         {
           "ContentItemId": "menu-main",
+          "ContentItemVersionId": "menu-main-v1",
           "ContentType": "Menu",
           "DisplayText": "Main Menu",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
-          "Content": {
-            "TitlePart": { "Title": "Main Menu" },
-            "AliasPart": { "Alias": "main-menu" },
-            "MenuItemsListPart": {
-              "MenuItems": [
-                {
-                  "ContentType": "LinkMenuItem",
-                  "ContentItemId": "menu-item-home",
-                  "Content": { "LinkMenuItemPart": { "Name": "Home", "Url": "~/" } }
-                },
-                {
-                  "ContentType": "LinkMenuItem",
-                  "ContentItemId": "menu-item-features",
-                  "Content": { "LinkMenuItemPart": { "Name": "Features", "Url": "~/#features" } }
-                },
-                {
-                  "ContentType": "LinkMenuItem",
-                  "ContentItemId": "menu-item-blog",
-                  "Content": { "LinkMenuItemPart": { "Name": "Blog", "Url": "~/blog" } }
-                },
-                {
-                  "ContentType": "LinkMenuItem",
-                  "ContentItemId": "menu-item-contact",
-                  "Content": { "LinkMenuItemPart": { "Name": "Contact", "Url": "~/#contact" } }
-                }
-              ]
-            }
+          "Author": "admin",
+          "TitlePart": { "Title": "Main Menu" },
+          "AliasPart": { "Alias": "main-menu" },
+          "MenuItemsListPart": {
+            "MenuItems": [
+              {
+                "ContentType": "LinkMenuItem",
+                "ContentItemId": "menu-item-home",
+                "DisplayText": "Home",
+                "LinkMenuItemPart": { "Name": "Home", "Url": "~/" }
+              },
+              {
+                "ContentType": "LinkMenuItem",
+                "ContentItemId": "menu-item-features",
+                "DisplayText": "Features",
+                "LinkMenuItemPart": { "Name": "Features", "Url": "~/#features" }
+              },
+              {
+                "ContentType": "LinkMenuItem",
+                "ContentItemId": "menu-item-blog",
+                "DisplayText": "Blog",
+                "LinkMenuItemPart": { "Name": "Blog", "Url": "~/blog" }
+              },
+              {
+                "ContentType": "LinkMenuItem",
+                "ContentItemId": "menu-item-contact",
+                "DisplayText": "Contact",
+                "LinkMenuItemPart": { "Name": "Contact", "Url": "~/#contact" }
+              }
+            ]
           }
         },
         {
           "ContentItemId": "feature-fast",
+          "ContentItemVersionId": "feature-fast-v1",
           "ContentType": "Feature",
           "DisplayText": "Fast",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-01T10:00:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Fast" },
-            "HtmlBodyPart": { "Html": "Tiny CSS footprint, no runtime framework. Pages load instantly." }
-          }
+          "TitlePart": { "Title": "Fast" },
+          "HtmlBodyPart": { "Html": "Tiny CSS footprint, no runtime framework. Pages load instantly." }
         },
         {
           "ContentItemId": "feature-accessible",
+          "ContentItemVersionId": "feature-accessible-v1",
           "ContentType": "Feature",
           "DisplayText": "Accessible",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-01T10:01:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Accessible" },
-            "HtmlBodyPart": { "Html": "Skip links, focus rings, ARIA labels and semantic markup baked in." }
-          }
+          "TitlePart": { "Title": "Accessible" },
+          "HtmlBodyPart": { "Html": "Skip links, focus rings, ARIA labels and semantic markup baked in." }
         },
         {
           "ContentItemId": "feature-darkmode",
+          "ContentItemVersionId": "feature-darkmode-v1",
           "ContentType": "Feature",
           "DisplayText": "Dark mode",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-01T10:02:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Dark mode" },
-            "HtmlBodyPart": { "Html": "Respects system preference and remembers your choice across visits." }
-          }
+          "TitlePart": { "Title": "Dark mode" },
+          "HtmlBodyPart": { "Html": "Respects system preference and remembers your choice across visits." }
         },
         {
           "ContentItemId": "feature-responsive",
+          "ContentItemVersionId": "feature-responsive-v1",
           "ContentType": "Feature",
           "DisplayText": "Responsive",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-01T10:03:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Responsive" },
-            "HtmlBodyPart": { "Html": "Fluid grids and breakpoints from mobile to wide desktop." }
-          }
+          "TitlePart": { "Title": "Responsive" },
+          "HtmlBodyPart": { "Html": "Fluid grids and breakpoints from mobile to wide desktop." }
         },
         {
           "ContentItemId": "blog-main-en",
+          "ContentItemVersionId": "blog-main-en-v1",
           "ContentType": "Blog",
           "DisplayText": "Blog",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
-          "Content": {
-            "TitlePart": { "Title": "Blog" },
-            "AutoroutePart": { "Path": "blog" },
-            "LocalizationPart": { "Culture": "en", "LocalizationSet": "blog" }
-          }
+          "Author": "admin",
+          "TitlePart": { "Title": "Blog" },
+          "AutoroutePart": { "Path": "blog", "SetHomepage": false },
+          "ListPart": {},
+          "LocalizationPart": { "Culture": "en", "LocalizationSet": "blog" }
         },
         {
           "ContentItemId": "blog-post-getting-started",
+          "ContentItemVersionId": "blog-post-getting-started-v1",
           "ContentType": "BlogPost",
           "DisplayText": "Getting started with Orchard Core",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-28T10:00:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Getting started with Orchard Core" },
-            "AutoroutePart": { "Path": "blog/getting-started" },
-            "HtmlBodyPart": { "Html": "<p>Install, configure and ship your first Orchard Core site using the Breez theme as a starting point.</p>" },
-            "TagsPart": { "Tags": [ "Breez", "guide" ] },
-            "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 0 },
-            "LocalizationPart": { "Culture": "en", "LocalizationSet": "getting-started" }
-          }
+          "TitlePart": { "Title": "Getting started with Orchard Core" },
+          "AutoroutePart": { "Path": "blog/getting-started-with-orchard-core", "SetHomepage": false },
+          "HtmlBodyPart": { "Html": "<p>Install, configure and ship your first Orchard Core site using the Breez theme as a starting point.</p>" },
+          "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 0 },
+          "LocalizationPart": { "Culture": "en", "LocalizationSet": "getting-started" }
         },
         {
           "ContentItemId": "blog-post-oklch",
+          "ContentItemVersionId": "blog-post-oklch-v1",
           "ContentType": "BlogPost",
           "DisplayText": "Theming with OKLCH colors",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-20T10:00:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Theming with OKLCH colors" },
-            "AutoroutePart": { "Path": "blog/theming-with-oklch-colors" },
-            "HtmlBodyPart": { "Html": "<p>Why perceptually-uniform color spaces make building consistent palettes far easier.</p>" },
-            "TagsPart": { "Tags": [ "Breez", "design" ] },
-            "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 1 },
-            "LocalizationPart": { "Culture": "en", "LocalizationSet": "theming-with-oklch" }
-          }
+          "TitlePart": { "Title": "Theming with OKLCH colors" },
+          "AutoroutePart": { "Path": "blog/theming-with-oklch-colors", "SetHomepage": false },
+          "HtmlBodyPart": { "Html": "<p>Why perceptually-uniform color spaces make building consistent palettes far easier.</p>" },
+          "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 1 },
+          "LocalizationPart": { "Culture": "en", "LocalizationSet": "theming-with-oklch" }
         },
         {
           "ContentItemId": "blog-post-accessibility",
+          "ContentItemVersionId": "blog-post-accessibility-v1",
           "ContentType": "BlogPost",
           "DisplayText": "Accessibility checklist",
-          "Published": true,
           "Latest": true,
+          "Published": true,
           "Owner": "admin",
+          "Author": "admin",
           "CreatedUtc": "2026-05-12T10:00:00Z",
-          "Content": {
-            "TitlePart": { "Title": "Accessibility checklist" },
-            "AutoroutePart": { "Path": "blog/accessibility-checklist" },
-            "HtmlBodyPart": { "Html": "<p>A practical checklist to make sure every page you publish is usable by everyone.</p>" },
-            "TagsPart": { "Tags": [ "Breez", "tips" ] },
-            "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 2 },
-            "LocalizationPart": { "Culture": "en", "LocalizationSet": "accessibility-checklist" }
-          }
+          "TitlePart": { "Title": "Accessibility checklist" },
+          "AutoroutePart": { "Path": "blog/accessibility-checklist", "SetHomepage": false },
+          "HtmlBodyPart": { "Html": "<p>A practical checklist to make sure every page you publish is usable by everyone.</p>" },
+          "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 2 },
+          "LocalizationPart": { "Culture": "en", "LocalizationSet": "accessibility-checklist" }
         }
       ]
     }

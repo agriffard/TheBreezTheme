@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/TheBreezTheme/TheBreezTheme.csproj" />
   </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/TheBreezTheme.Web/TheBreezTheme.Web.csproj" />
+  </Folder>
 </Solution>
