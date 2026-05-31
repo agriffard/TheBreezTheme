@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ Site.SiteName }}{% if Model.TitlePart %} - {{ Model.TitlePart.Title }}{% endif %}</title>
   {% render_section "CommonStyles", required: false %}
-  {% style name:"Breez" %}
+  {% style name:"TheBreezTheme" %}
   {% resources type:"Meta" %}
   {% resources type:"HeadLink" %}
   {% resources type:"Stylesheet" %}
@@ -48,7 +48,7 @@
   <script>
     (function(){
       var doc = document.documentElement;
-      var key = 'breez-theme';
+      var key = 'TheBreezTheme-theme';
       var mq = window.matchMedia('(prefers-color-scheme: dark)');
       var stored = localStorage.getItem(key);
       var dark = stored ? stored === 'dark' : mq.matches;

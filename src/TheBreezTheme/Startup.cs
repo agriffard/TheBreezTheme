@@ -3,11 +3,11 @@ using Microsoft.Extensions.Options;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 
-namespace Breez;
+namespace TheBreezTheme;
 
 public sealed class Startup : StartupBase
 {
     public override void ConfigureServices(IServiceCollection services)
         => services.AddTransient<IConfigureOptions<ResourceManagementOptions>,
-                                 BreezResourceOptions>();
+                                 TheBreezThemeResourceOptions>();
 }
