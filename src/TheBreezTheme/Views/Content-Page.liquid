@@ -1,6 +1,95 @@
-<article class="article card p-6 rounded-card shadow-card">
-  {{ Model.Content.TitlePart | shape_render }}
-  <div class="mt-4">
-    {{ Model.Content.HtmlBodyPart | shape_render }}
+{%- assign ci = Model.ContentItem -%}
+{%- assign isHome = false -%}
+{%- if ci.ContentItemId == "page-home-en" or ci.ContentItemId == "page-home-fr" -%}
+  {%- assign isHome = true -%}
+{%- endif -%}
+
+{%- if isHome -%}
+  {%- comment -%} Landing page rendered from Liquid + Queries (no HtmlBody needed). {%- endcomment -%}
+
+  <section class="hero">
+    <div class="container text-center py-10">
+      <span class="badge mb-4">{{ "Orchard Core Theme" | t }}</span>
+      <h1 class="md:text-2xl xl:text-3xl" style="font-size:clamp(2rem,5vw,3.25rem)">{{ "Build clean, fast websites with Breez" | t }}</h1>
+      <p class="text-lg" style="max-width:42rem;margin:1rem auto;color:var(--muted)">
+        {{ "A lightweight, accessible and responsive Orchard Core theme. Dark mode out of the box, modern OKLCH colors and zero JavaScript framework dependencies." | t }}
+      </p>
+      <div class="inline-flex gap-3 mt-4">
+        <a class="btn btn-primary" href="#features">{{ "Get started" | t }}</a>
+        <a class="btn btn-outline" href="#blog">{{ "Read the blog" | t }}</a>
+      </div>
+    </div>
+  </section>
+
+  {% assign features = Queries.HomeFeatures | query %}
+  {% if features != empty %}
+  <section id="features" class="container py-10">
+    <h2 class="text-center mb-4">{{ "Why Breez" | t }}</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {% for feature in features %}
+      <article class="card p-6">
+        <h3 class="card-title">{{ feature.DisplayText }}</h3>
+        <div class="card-meta">{{ feature.Content.HtmlBodyPart.Html }}</div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <hr class="container">
+
+  {% assign posts = Queries.LatestBlogPosts | query %}
+  {% if posts != empty %}
+  <section id="blog" class="container py-10">
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <h2 style="margin:0">{{ "Latest posts" | t }}</h2>
+      <a class="text-sm font-semibold" href="{{ '~/blog' | href }}">{{ "View all" | t }} &rarr;</a>
+    </div>
+    <div class="blog-list">
+      {% for post in posts %}
+      <article class="card p-6">
+        <h3 class="card-title"><a href="{{ post | display_url }}">{{ post.DisplayText }}</a></h3>
+        <p class="card-meta mb-2">{{ post.CreatedUtc | date: "%B %d, %Y" }}</p>
+        <p>{{ post.Content.HtmlBodyPart.Html | strip_html | truncate: 160 }}</p>
+        <a class="text-sm font-semibold" href="{{ post | display_url }}">{{ "Read more" | t }} &rarr;</a>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <hr class="container">
+
+  <section id="contact" class="container py-10">
+    <div class="article">
+      <h2 class="text-center">{{ "Get in touch" | t }}</h2>
+      <p class="text-center" style="color:var(--muted)">{{ "Have a question about Breez? Send us a message." | t }}</p>
+      <form class="card p-6 mt-4" method="post" action="#">
+        <div class="mb-4">
+          <label for="name">{{ "Name" | t }}</label>
+          <input id="name" name="name" type="text" placeholder='{{ "Your name" | t }}'>
+        </div>
+        <div class="mb-4">
+          <label for="email">{{ "Email" | t }}</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com">
+          <p class="form-help">{{ "We never share your email." | t }}</p>
+        </div>
+        <div class="mb-4">
+          <label for="message">{{ "Message" | t }}</label>
+          <textarea id="message" name="message" rows="4" placeholder='{{ "Type your message..." | t }}'></textarea>
+        </div>
+        <button class="btn btn-primary w-full" type="submit">{{ "Send message" | t }}</button>
+      </form>
+    </div>
+  </section>
+
+{%- else -%}
+  <div class="container">
+    <article class="article card p-6 rounded-card shadow-card">
+      {{ Model.Content.TitlePart | shape_render }}
+      <div class="mt-4">
+        {{ Model.Content.HtmlBodyPart | shape_render }}
+      </div>
+    </article>
   </div>
-</article>
+{%- endif -%}

@@ -1,4 +1,4 @@
-<section class="blog-list">
+<section class="blog-list container">
   {% for item in Model.ContentItems %}
     <article class="card p-6 rounded-card shadow-card">
       <h2 class="card-title mb-2"><a href="{{ item | display_url }}">{{ item.DisplayText }}</a></h2>

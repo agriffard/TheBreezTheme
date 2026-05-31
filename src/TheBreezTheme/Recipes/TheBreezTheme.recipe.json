@@ -1,7 +1,7 @@
 {
   "name": "TheBreezTheme",
   "displayName": "The Breez Theme",
-  "description": "Apply the TheBreezTheme theme and seed demo content.",
+  "description": "Apply the Breez theme and seed demo content.",
   "author": "Antoine",
   "website": "https://github.com/agriffard/TheBreezTheme",
   "version": "1.0.0",
@@ -46,6 +46,7 @@
         "OrchardCore.Menu",
         "OrchardCore.Navigation",
         "OrchardCore.Queries",
+        "OrchardCore.Queries.Sql",
         "OrchardCore.Users",
         "OrchardCore.Recipes",
         "OrchardCore.Roles",
@@ -104,19 +105,35 @@
             { "PartName": "AutoroutePart", "Name": "AutoroutePart" },
             { "PartName": "LocalizationPart", "Name": "LocalizationPart" }
           ]
+        },
+        {
+          "Name": "Feature",
+          "DisplayName": "Feature",
+          "Settings": {
+            "ContentTypeSettings": { "Creatable": true, "Listable": true, "Draftable": true, "Versionable": true, "Securable": true },
+            "Stereotype": "Content"
+          },
+          "ContentTypePartDefinitionRecords": [
+            { "PartName": "TitlePart", "Name": "TitlePart" },
+            { "PartName": "HtmlBodyPart", "Name": "HtmlBodyPart" }
+          ]
         }
       ]
     },
     {
-      "name": "Menu",
-      "MainMenu": [
+      "name": "queries",
+      "Queries": [
         {
-          "Title": "Home",
-          "Link": "~/"
+          "Source": "Sql",
+          "Name": "HomeFeatures",
+          "ReturnContentItems": true,
+          "Template": "SELECT DocumentId FROM ContentItemIndex WHERE ContentType = 'Feature' AND Published = 1 AND Latest = 1 ORDER BY CreatedUtc"
         },
         {
-          "Title": "Blog",
-          "Link": "~/blog"
+          "Source": "Sql",
+          "Name": "LatestBlogPosts",
+          "ReturnContentItems": true,
+          "Template": "SELECT DocumentId FROM ContentItemIndex WHERE ContentType = 'BlogPost' AND Published = 1 AND Latest = 1 ORDER BY CreatedUtc DESC"
         }
       ]
     },
@@ -140,9 +157,9 @@
           "Latest": true,
           "Owner": "admin",
           "Content": {
-            "TitlePart": { "Title": "Welcome to TheBreezTheme" },
+            "TitlePart": { "Title": "Welcome" },
             "AutoroutePart": { "Path": "" },
-            "HtmlBodyPart": { "Html": "<p>Clean, modern, and accessible Orchard Core pages powered by TheBreezTheme.</p>" },
+            "HtmlBodyPart": { "Html": "" },
             "LocalizationPart": { "Culture": "en", "LocalizationSet": "home" }
           }
         },
@@ -154,10 +171,98 @@
           "Latest": true,
           "Owner": "admin",
           "Content": {
-            "TitlePart": { "Title": "Bienvenue sur TheBreezTheme" },
+            "TitlePart": { "Title": "Bienvenue" },
             "AutoroutePart": { "Path": "fr" },
-            "HtmlBodyPart": { "Html": "<p>Un thème Orchard Core moderne, accessible et bilingue.</p>" },
+            "HtmlBodyPart": { "Html": "" },
             "LocalizationPart": { "Culture": "fr", "LocalizationSet": "home" }
+          }
+        },
+        {
+          "ContentItemId": "menu-main",
+          "ContentType": "Menu",
+          "DisplayText": "Main Menu",
+          "Published": true,
+          "Latest": true,
+          "Owner": "admin",
+          "Content": {
+            "TitlePart": { "Title": "Main Menu" },
+            "AliasPart": { "Alias": "main-menu" },
+            "MenuItemsListPart": {
+              "MenuItems": [
+                {
+                  "ContentType": "LinkMenuItem",
+                  "ContentItemId": "menu-item-home",
+                  "Content": { "LinkMenuItemPart": { "Name": "Home", "Url": "~/" } }
+                },
+                {
+                  "ContentType": "LinkMenuItem",
+                  "ContentItemId": "menu-item-features",
+                  "Content": { "LinkMenuItemPart": { "Name": "Features", "Url": "~/#features" } }
+                },
+                {
+                  "ContentType": "LinkMenuItem",
+                  "ContentItemId": "menu-item-blog",
+                  "Content": { "LinkMenuItemPart": { "Name": "Blog", "Url": "~/blog" } }
+                },
+                {
+                  "ContentType": "LinkMenuItem",
+                  "ContentItemId": "menu-item-contact",
+                  "Content": { "LinkMenuItemPart": { "Name": "Contact", "Url": "~/#contact" } }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ContentItemId": "feature-fast",
+          "ContentType": "Feature",
+          "DisplayText": "Fast",
+          "Published": true,
+          "Latest": true,
+          "Owner": "admin",
+          "CreatedUtc": "2026-05-01T10:00:00Z",
+          "Content": {
+            "TitlePart": { "Title": "Fast" },
+            "HtmlBodyPart": { "Html": "Tiny CSS footprint, no runtime framework. Pages load instantly." }
+          }
+        },
+        {
+          "ContentItemId": "feature-accessible",
+          "ContentType": "Feature",
+          "DisplayText": "Accessible",
+          "Published": true,
+          "Latest": true,
+          "Owner": "admin",
+          "CreatedUtc": "2026-05-01T10:01:00Z",
+          "Content": {
+            "TitlePart": { "Title": "Accessible" },
+            "HtmlBodyPart": { "Html": "Skip links, focus rings, ARIA labels and semantic markup baked in." }
+          }
+        },
+        {
+          "ContentItemId": "feature-darkmode",
+          "ContentType": "Feature",
+          "DisplayText": "Dark mode",
+          "Published": true,
+          "Latest": true,
+          "Owner": "admin",
+          "CreatedUtc": "2026-05-01T10:02:00Z",
+          "Content": {
+            "TitlePart": { "Title": "Dark mode" },
+            "HtmlBodyPart": { "Html": "Respects system preference and remembers your choice across visits." }
+          }
+        },
+        {
+          "ContentItemId": "feature-responsive",
+          "ContentType": "Feature",
+          "DisplayText": "Responsive",
+          "Published": true,
+          "Latest": true,
+          "Owner": "admin",
+          "CreatedUtc": "2026-05-01T10:03:00Z",
+          "Content": {
+            "TitlePart": { "Title": "Responsive" },
+            "HtmlBodyPart": { "Html": "Fluid grids and breakpoints from mobile to wide desktop." }
           }
         },
         {
@@ -174,34 +279,54 @@
           }
         },
         {
-          "ContentItemId": "blog-post-hello-en",
+          "ContentItemId": "blog-post-getting-started",
           "ContentType": "BlogPost",
-          "DisplayText": "Hello TheBreezTheme",
+          "DisplayText": "Getting started with Orchard Core",
           "Published": true,
           "Latest": true,
           "Owner": "admin",
+          "CreatedUtc": "2026-05-28T10:00:00Z",
           "Content": {
-            "TitlePart": { "Title": "Hello TheBreezTheme" },
-            "AutoroutePart": { "Path": "blog/hello-TheBreezTheme" },
-            "HtmlBodyPart": { "Html": "<p>This first post introduces the TheBreezTheme design system.</p>" },
-            "TagsPart": { "Tags": [ "TheBreezTheme", "theme" ] },
-            "ContainedPart": { "ListContentItemId": "blog-main-en" },
-            "LocalizationPart": { "Culture": "en", "LocalizationSet": "hello-post" }
+            "TitlePart": { "Title": "Getting started with Orchard Core" },
+            "AutoroutePart": { "Path": "blog/getting-started" },
+            "HtmlBodyPart": { "Html": "<p>Install, configure and ship your first Orchard Core site using the Breez theme as a starting point.</p>" },
+            "TagsPart": { "Tags": [ "Breez", "guide" ] },
+            "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 0 },
+            "LocalizationPart": { "Culture": "en", "LocalizationSet": "getting-started" }
           }
         },
         {
-          "ContentItemId": "blog-post-bonjour-fr",
+          "ContentItemId": "blog-post-oklch",
           "ContentType": "BlogPost",
-          "DisplayText": "Bonjour TheBreezTheme",
+          "DisplayText": "Theming with OKLCH colors",
           "Published": true,
           "Latest": true,
           "Owner": "admin",
+          "CreatedUtc": "2026-05-20T10:00:00Z",
           "Content": {
-            "TitlePart": { "Title": "Bonjour TheBreezTheme" },
-            "AutoroutePart": { "Path": "fr/blog/bonjour-TheBreezTheme" },
-            "HtmlBodyPart": { "Html": "<p>Ce billet présente la version française du thème TheBreezTheme.</p>" },
-            "TagsPart": { "Tags": [ "TheBreezTheme", "fr" ] },
-            "LocalizationPart": { "Culture": "fr", "LocalizationSet": "hello-post" }
+            "TitlePart": { "Title": "Theming with OKLCH colors" },
+            "AutoroutePart": { "Path": "blog/theming-with-oklch-colors" },
+            "HtmlBodyPart": { "Html": "<p>Why perceptually-uniform color spaces make building consistent palettes far easier.</p>" },
+            "TagsPart": { "Tags": [ "Breez", "design" ] },
+            "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 1 },
+            "LocalizationPart": { "Culture": "en", "LocalizationSet": "theming-with-oklch" }
+          }
+        },
+        {
+          "ContentItemId": "blog-post-accessibility",
+          "ContentType": "BlogPost",
+          "DisplayText": "Accessibility checklist",
+          "Published": true,
+          "Latest": true,
+          "Owner": "admin",
+          "CreatedUtc": "2026-05-12T10:00:00Z",
+          "Content": {
+            "TitlePart": { "Title": "Accessibility checklist" },
+            "AutoroutePart": { "Path": "blog/accessibility-checklist" },
+            "HtmlBodyPart": { "Html": "<p>A practical checklist to make sure every page you publish is usable by everyone.</p>" },
+            "TagsPart": { "Tags": [ "Breez", "tips" ] },
+            "ContainedPart": { "ListContentItemId": "blog-main-en", "Order": 2 },
+            "LocalizationPart": { "Culture": "en", "LocalizationSet": "accessibility-checklist" }
           }
         }
       ]
