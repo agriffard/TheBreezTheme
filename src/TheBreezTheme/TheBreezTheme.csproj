@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.Theme.Targets" Version="3.0.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.0" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.0" />
+    <PackageReference Include="OrchardCore.Theme.Targets" Version="3.0.1" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.1" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.1" />
   </ItemGroup>
 
   <Target Name="BuildTailwindIfAvailable" BeforeTargets="BeforeBuild" Condition="Exists('$(TailwindCli)')">
